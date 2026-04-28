@@ -70,6 +70,16 @@ make ci
 pytest -q
 ```
 
+## Examples
+
+Start with the data-free hello world:
+
+```bash
+uv run python examples/hello-world/run.py
+```
+
+See `examples/hello-world/README.md` for details.
+
 ## Create a new Realm (boilerplate)
 
 ```bash
