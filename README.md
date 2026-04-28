@@ -123,29 +123,6 @@ cfg = load_domain_config("realms/<your_realm>/configs/domain.yaml")
 Clinical realms are for retrospective research and medical education simulation only.
 Do not present outputs as treatment recommendations.
 
-## Heart Failure model continuation (start here)
-
-To begin continuation for the HF model pipeline, run stages in order:
-
-```bash
-python -m app.data_build.build_cohort --config realms/clinical_hf/configs/domain.yaml
-python -m app.features.build_dataset --config realms/clinical_hf/configs/domain.yaml
-python -m app.encoders.train_encoder --config realms/clinical_hf/configs/domain.yaml
-python -m app.jepa.train_jepa --config realms/clinical_hf/configs/domain.yaml
-python -m app.transition.train_transition --config realms/clinical_hf/configs/domain.yaml
-python -m app.energy_graph.train_energy --config realms/clinical_hf/configs/domain.yaml
-```
-
-Recommended continuation checklist:
-- Rebuild cohort and feature parquet artifacts
-- Resume JEPA/transition/energy training from latest artifacts
-- Run evaluation + rollout sanity checks
-- Run full quality gates before merging:
-
-```bash
-make ci
-```
-
 ## License
 
 MIT — see `LICENSE`.
