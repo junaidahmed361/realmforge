@@ -6,9 +6,9 @@ from pathlib import Path
 import torch
 import yaml
 
-from encoders.patient_encoder import PatientEncoder
-from jepa.losses import contrastive_jepa_loss
-from jepa.model import JEPAFuturePredictor
+from app.encoders.patient_encoder import PatientEncoder
+from app.jepa.losses import contrastive_jepa_loss
+from app.jepa.model import JEPAFuturePredictor
 
 
 def _load_cfg(path: str) -> dict:

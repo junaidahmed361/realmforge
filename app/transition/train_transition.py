@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 import yaml
 
-from transition.model import ActionConditionedTransition
+from app.transition.model import ActionConditionedTransition
 
 
 def _load_cfg(path: str) -> dict:

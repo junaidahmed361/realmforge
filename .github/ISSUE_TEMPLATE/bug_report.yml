@@ -9,7 +9,7 @@ body:
       label: Scope
       options:
         - Backbone (wm_app)
-        - Realm overlay (domains/*)
+        - Realm overlay (realms/*)
         - CI/CD
         - Docs
     validations:

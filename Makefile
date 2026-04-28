@@ -15,13 +15,13 @@ format-check:
 	ruff format --check .
 
 typecheck:
-	mypy wm_app domains tests --ignore-missing-imports
+	mypy app realms tests --ignore-missing-imports
 
 test:
-	pytest --cov=wm_app --cov-report=term-missing
+	pytest --cov=app/wm_app --cov-report=term-missing
 
 security:
-	bandit -r wm_app domains -c pyproject.toml
+	bandit -r app realms -c pyproject.toml
 	python -m pip install pip-audit && pip-audit
 
 release-rc:

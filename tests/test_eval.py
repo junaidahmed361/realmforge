@@ -1,6 +1,6 @@
 import numpy as np
 
-from eval.metrics import ece
+from app.eval.metrics import ece
 
 
 def test_ece_range():

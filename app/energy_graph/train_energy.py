@@ -6,7 +6,7 @@ from pathlib import Path
 import torch
 import yaml
 
-from energy_graph.model import EnergyFactorGraph, margin_plausibility_loss
+from app.energy_graph.model import EnergyFactorGraph, margin_plausibility_loss
 
 
 def _load_cfg(path: str) -> dict:

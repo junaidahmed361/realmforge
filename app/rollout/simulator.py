@@ -4,9 +4,9 @@ from dataclasses import dataclass
 
 import torch
 
-from energy_graph.model import EnergyFactorGraph
-from transition.model import ActionConditionedTransition
-from transition.outcome_heads import OutcomeHeads
+from app.energy_graph.model import EnergyFactorGraph
+from app.transition.model import ActionConditionedTransition
+from app.transition.outcome_heads import OutcomeHeads
 
 
 @dataclass

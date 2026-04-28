@@ -1,6 +1,6 @@
 import torch
 
-from energy_graph.model import EnergyFactorGraph, margin_plausibility_loss
+from app.energy_graph.model import EnergyFactorGraph, margin_plausibility_loss
 
 
 def test_energy_margin_loss_prefers_lower_positive_energy():

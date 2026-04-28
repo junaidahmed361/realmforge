@@ -9,8 +9,8 @@ import torch.nn as nn
 import yaml
 from torch.utils.data import DataLoader
 
-from encoders.dataset import HFWindowSequenceDataset
-from encoders.patient_encoder import PatientEncoder
+from app.encoders.dataset import HFWindowSequenceDataset
+from app.encoders.patient_encoder import PatientEncoder
 
 
 def _load_cfg(path: str) -> dict:

@@ -2,7 +2,7 @@
 
 Build worlds, not one-off pipelines.
 
-RealmForge is for teams who want to simulate decisions over time without rewriting infrastructure every time they switch domains. You bring the domain logic; RealmForge gives you a reusable backbone for state, actions, plausibility constraints, and rollouts.
+RealmForge is for teams who want to simulate decisions over time without rewriting infrastructure every time they switch realms. You bring the domain logic; RealmForge gives you a reusable backbone for state, actions, plausibility constraints, and rollouts.
 
 In plain English:
 - If you can describe your domain as "things changing over time"
@@ -17,8 +17,8 @@ Most simulation projects start fast and then get messy:
 - every new use-case needs custom plumbing
 
 RealmForge keeps those concerns separated:
-- a shared backbone in `wm_app/`
-- domain overlays in `domains/`
+- a shared backbone in `app/wm_app/`
+- domain overlays in `realms/`
 - repeatable configs and quality gates for CI/CD
 
 So your clinical, finance, logistics, or policy teams can all use the same engine with different "Realms."
@@ -34,8 +34,8 @@ So your clinical, finance, logistics, or policy teams can all use the same engin
 
 ## Project structure
 
-- `wm_app/` shared backbone (encoding, transition, energy, rollout interfaces)
-- `domains/` realm overlays (schemas, mappings, concepts, actions)
+- `app/wm_app/` shared backbone (encoding, transition, energy, rollout interfaces)
+- `realms/` realm overlays (schemas, mappings, concepts, actions)
 - `configs/backbone/` default backbone configuration
 - `.github/` CI/CD workflows, templates, and governance
 
@@ -64,21 +64,21 @@ pytest -q
 ## Create a new Realm (boilerplate)
 
 ```bash
-cp -R domains/_realm_template domains/<your_realm>
+cp -R realms/_realm_template realms/<your_realm>
 ```
 
 Then edit:
-- `domains/<your_realm>/configs/domain.yaml`
-- `domains/<your_realm>/mappings/schema.md`
-- `domains/<your_realm>/pipelines/README.md`
-- `domains/<your_realm>/concepts/seed_concepts.yaml`
+- `realms/<your_realm>/configs/domain.yaml`
+- `realms/<your_realm>/mappings/schema.md`
+- `realms/<your_realm>/pipelines/README.md`
+- `realms/<your_realm>/concepts/seed_concepts.yaml`
 
 Load merged config in Python:
 
 ```python
-from wm_app.core.config_loader import load_domain_config
+from app.wm_app.core.config_loader import load_domain_config
 
-cfg = load_domain_config("domains/<your_realm>/configs/domain.yaml")
+cfg = load_domain_config("realms/<your_realm>/configs/domain.yaml")
 ```
 
 ## Minimal realm modeling checklist

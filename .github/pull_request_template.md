@@ -3,7 +3,7 @@
 
 ## Realm impact
 - [ ] Backbone (wm_app)
-- [ ] Realm overlay (domains/*)
+- [ ] Realm overlay (realms/*)
 - [ ] Clinical safety language updated if needed
 
 ## Verification

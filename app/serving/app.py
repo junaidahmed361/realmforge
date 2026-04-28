@@ -7,10 +7,10 @@ import torch
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from energy_graph.model import EnergyFactorGraph
-from rollout.simulator import WorldModelSimulator
-from transition.model import ActionConditionedTransition
-from transition.outcome_heads import OutcomeHeads
+from app.energy_graph.model import EnergyFactorGraph
+from app.rollout.simulator import WorldModelSimulator
+from app.transition.model import ActionConditionedTransition
+from app.transition.outcome_heads import OutcomeHeads
 
 app = FastAPI(title="HF-EBWM Serving")
 

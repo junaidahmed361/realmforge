@@ -6,7 +6,7 @@ from pathlib import Path
 import pandas as pd
 import yaml
 
-from features.window_builder import build_windows_for_stay
+from app.features.window_builder import build_windows_for_stay
 
 
 def _load_cfg(path: str) -> dict:
