@@ -9,9 +9,9 @@ __pycache__/
 *.pt
 *.pth
 *.onnx
-data/
-outputs/
-checkpoints/
+/data/
+/outputs/
+/checkpoints/
 wandb/
 .ipynb_checkpoints/
 *.egg-info/
