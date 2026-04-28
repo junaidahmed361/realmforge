@@ -1,0 +1,79 @@
+<svg width="1200" height="700" viewBox="0 0 1200 700" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RealmForge cartoon graphic">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <radialGradient id="orb" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#fef9c3"/>
+      <stop offset="45%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#22d3ee"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="700" fill="url(#bg)"/>
+
+  <text x="600" y="70" fill="#e2e8f0" font-family="Verdana, sans-serif" font-size="44" text-anchor="middle" font-weight="700">RealmForge</text>
+  <text x="600" y="105" fill="#94a3b8" font-family="Verdana, sans-serif" font-size="20" text-anchor="middle">Build worlds, not one-off pipelines</text>
+
+  <!-- anvil -->
+  <rect x="430" y="430" width="340" height="38" rx="8" fill="#475569"/>
+  <rect x="510" y="468" width="180" height="72" rx="10" fill="#334155"/>
+  <rect x="470" y="540" width="260" height="30" rx="8" fill="#1f2937"/>
+
+  <!-- world orb -->
+  <circle cx="600" cy="360" r="86" fill="url(#orb)" filter="url(#glow)"/>
+  <path d="M540 350 C565 320, 640 320, 662 350" stroke="#e0f2fe" stroke-width="4" fill="none" opacity="0.9"/>
+  <path d="M550 387 C585 410, 620 410, 652 387" stroke="#bae6fd" stroke-width="4" fill="none" opacity="0.9"/>
+  <circle cx="575" cy="342" r="8" fill="#fef08a"/>
+
+  <!-- robot smith -->
+  <rect x="290" y="320" width="130" height="120" rx="18" fill="#94a3b8"/>
+  <rect x="305" y="275" width="100" height="70" rx="14" fill="#cbd5e1"/>
+  <circle cx="335" cy="310" r="10" fill="#0ea5e9"/>
+  <circle cx="375" cy="310" r="10" fill="#0ea5e9"/>
+  <rect x="340" y="330" width="30" height="8" rx="4" fill="#475569"/>
+  <rect x="260" y="355" width="35" height="20" rx="8" fill="#94a3b8"/>
+  <rect x="420" y="355" width="35" height="20" rx="8" fill="#94a3b8"/>
+
+  <!-- hammer arm -->
+  <line x1="452" y1="365" x2="515" y2="310" stroke="#94a3b8" stroke-width="14" stroke-linecap="round"/>
+  <rect x="505" y="282" width="72" height="28" rx="8" fill="#64748b"/>
+  <line x1="545" y1="312" x2="575" y2="338" stroke="#f59e0b" stroke-width="5"/>
+
+  <!-- timeline/scenario arrows -->
+  <path d="M710 240 C805 210, 895 235, 960 290" stroke="#22d3ee" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <path d="M710 480 C815 500, 890 470, 960 420" stroke="#22d3ee" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+  <circle cx="975" cy="292" r="24" fill="#0ea5e9"/>
+  <text x="975" y="298" text-anchor="middle" fill="#f8fafc" font-family="Verdana" font-size="14">t+1</text>
+  <circle cx="975" cy="420" r="24" fill="#0ea5e9"/>
+  <text x="975" y="426" text-anchor="middle" fill="#f8fafc" font-family="Verdana" font-size="14">t+2</text>
+
+  <!-- gears -->
+  <g transform="translate(180 170)">
+    <circle r="38" fill="#334155"/>
+    <circle r="20" fill="#0f172a"/>
+  </g>
+  <g transform="translate(1020 170)">
+    <circle r="28" fill="#334155"/>
+    <circle r="14" fill="#0f172a"/>
+  </g>
+
+  <!-- sparks -->
+  <circle cx="535" cy="330" r="4" fill="#fde68a"/>
+  <circle cx="560" cy="315" r="3" fill="#fef08a"/>
+  <circle cx="590" cy="305" r="2.5" fill="#facc15"/>
+  <circle cx="620" cy="314" r="3" fill="#fde047"/>
+
+  <text x="600" y="640" fill="#cbd5e1" font-family="Verdana, sans-serif" font-size="18" text-anchor="middle">Scenarios • Timelines • Counterfactuals • Rollouts</text>
+</svg>

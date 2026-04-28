@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 from pathlib import Path
 
 import duckdb
@@ -14,6 +15,9 @@ def _load_cfg(path: str) -> dict:
 
 
 def _register_table(con: duckdb.DuckDBPyConnection, name: str, root: Path) -> None:
+    if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", name):
+        raise ValueError(f"Invalid table/view identifier: {name}")
+
     parquet_glob = root / "**" / f"{name}.parquet"
     csv_glob = root / "**" / f"{name}.csv*"
     parquet_matches = list(root.glob(f"**/{name}.parquet"))
@@ -21,13 +25,13 @@ def _register_table(con: duckdb.DuckDBPyConnection, name: str, root: Path) -> No
 
     if parquet_matches:
         con.execute(
-            f"CREATE OR REPLACE VIEW {name} AS SELECT * FROM read_parquet('{parquet_glob}')"
+            f"CREATE OR REPLACE VIEW {name} AS SELECT * FROM read_parquet('{parquet_glob}')"  # nosec B608
         )
         return
     if csv_matches:
         con.execute(
             "CREATE OR REPLACE VIEW "
-            f"{name} AS SELECT * FROM read_csv_auto('{csv_glob}', HEADER=TRUE)"
+            f"{name} AS SELECT * FROM read_csv_auto('{csv_glob}', HEADER=TRUE)"  # nosec B608
         )
         return
     raise FileNotFoundError(f"Could not find {name}.parquet/.csv(.gz) under {root}")

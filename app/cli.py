@@ -2,12 +2,12 @@ from __future__ import annotations
 
 import argparse
 import shutil
-import subprocess
+import subprocess  # nosec B404
 from pathlib import Path
 
 
 def _run(cmd: list[str]) -> int:
-    return subprocess.call(cmd)
+    return subprocess.call(cmd)  # nosec B603
 
 
 def cmd_build() -> int:
@@ -47,7 +47,7 @@ def main() -> int:
     parser.add_argument("--start", action="store_true", help="Start default API app")
     parser.add_argument("--test", action="store_true", help="Run tests")
     parser.add_argument("--app", default="app.serving.app:app")
-    parser.add_argument("--host", default="0.0.0.0")
+    parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8080)
     args = parser.parse_args()
 

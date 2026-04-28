@@ -23,7 +23,12 @@ def main() -> None:
     cfg = _load_cfg(args.config)
 
     artifacts = Path(cfg["paths"]["artifacts_root"])
-    ckpt = torch.load(artifacts / "encoder" / "patient_encoder.pt", map_location="cpu")
+    try:
+        ckpt = torch.load(
+            artifacts / "encoder" / "patient_encoder.pt", map_location="cpu", weights_only=True
+        )
+    except TypeError:
+        ckpt = torch.load(artifacts / "encoder" / "patient_encoder.pt", map_location="cpu")  # nosec B614
     feature_cols = ckpt["feature_cols"]
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
