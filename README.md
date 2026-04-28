@@ -78,7 +78,15 @@ Start with the data-free hello world:
 uv run python examples/hello-world/run.py
 ```
 
-See `examples/hello-world/README.md` for details.
+Or run a trivial real-world domain example (inventory planning):
+
+```bash
+uv run python examples/supply-chain-mini/run.py
+```
+
+See:
+- `examples/hello-world/README.md`
+- `examples/supply-chain-mini/README.md`
 
 ## Create a new Realm (boilerplate)
 
