@@ -26,6 +26,6 @@ security:
 
 release-rc:
 	python -m build
-	@echo "Create git tag: v0.1.0-rc1"
+	@echo "Create git tag: v0.1.2"
 
 ci: lint format-check typecheck test security
