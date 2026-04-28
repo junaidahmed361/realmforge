@@ -1,67 +1,97 @@
 # RealmForge
 
-RealmForge is a domain-agnostic framework for building energy-based world models with bring-your-own-concept (BYOC) domain overlays.
+Build worlds, not one-off pipelines.
 
-Name origin and terminology
-- RealmForge = the framework/repo (this project)
-- Realm = a domain-specific scaffold (examples: HealthRealm, FinanceRealm)
-- World = the simulated environment, rules, entities, and dynamics
-- Campaign = a goal-driven journey/problem inside the world
-- Scenario = a specific setup or counterfactual within that campaign
+RealmForge is for teams who want to simulate decisions over time without rewriting infrastructure every time they switch domains. You bring the domain logic; RealmForge gives you a reusable backbone for state, actions, plausibility constraints, and rollouts.
+
+In plain English:
+- If you can describe your domain as "things changing over time"
+- And you want to run "what if we do X instead of Y?"
+- RealmForge helps you turn that into repeatable simulations.
+
+## Why build on RealmForge?
+
+Most simulation projects start fast and then get messy:
+- domain code gets tightly coupled to model code
+- experiments become hard to reproduce
+- every new use-case needs custom plumbing
+
+RealmForge keeps those concerns separated:
+- a shared backbone in `wm_app/`
+- domain overlays in `domains/`
+- repeatable configs and quality gates for CI/CD
+
+So your clinical, finance, logistics, or policy teams can all use the same engine with different "Realms."
+
+## Naming and concepts
+
+- RealmForge = the framework/repo
+- Realm = a domain-specific scaffold (example: HealthRealm, FinanceRealm)
+- World = the environment, entities, rules, and dynamics
+- Campaign = a goal-driven journey/problem in that world
+- Scenario = a concrete setup or counterfactual in a campaign
 - Timeline / Run = one sampled rollout of what could happen
 
-This vocabulary lets multiple domains coexist on one backbone while preserving domain-specific semantics.
+## Project structure
 
-Core architecture
-- wm_app/: shared backbone (encoding, transition, energy graph, rollout interfaces, serving/eval utilities)
-- domains/: realm overlays that define domain schema, mappings, actions, concepts, and configs
-- configs/backbone/: default backbone behavior
+- `wm_app/` shared backbone (encoding, transition, energy, rollout interfaces)
+- `domains/` realm overlays (schemas, mappings, concepts, actions)
+- `configs/backbone/` default backbone configuration
+- `.github/` CI/CD workflows, templates, and governance
 
-Current realms
-- domains/clinical_hf: first implementation track (education/research use only)
-- domains/financial_template: starter scaffold for non-clinical adaptation
-- domains/_realm_template: boilerplate to create new realms quickly
+## Quick start (simple)
 
-Quick start
-1) Clone and install
-   - python3 -m venv .venv
-   - source .venv/bin/activate
-   - pip install -e .[dev]
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .[dev]
+```
 
-2) Run quality gates
-   - pre-commit install
-   - pre-commit run --all-files
-   - make ci
+```bash
+realm --build
+realm --start
+```
 
-3) Run tests
-   - pytest -q
+## Quick start (developer workflow)
 
-Create a new realm (boilerplate)
-1) Copy template
-   - cp -R domains/_realm_template domains/<your_realm>
+```bash
+pre-commit install
+pre-commit run --all-files
+make ci
+pytest -q
+```
 
-2) Update realm config
-   - edit domains/<your_realm>/configs/domain.yaml
-   - set entity key/time key, actions, outcomes, concept tags
+## Create a new Realm (boilerplate)
 
-3) Add mappings and pipeline stubs
-   - edit domains/<your_realm>/mappings/schema.md
-   - edit domains/<your_realm>/pipelines/README.md
-   - edit domains/<your_realm>/concepts/seed_concepts.yaml
+```bash
+cp -R domains/_realm_template domains/<your_realm>
+```
 
-4) Load merged config in code
-   - from wm_app.core.config_loader import load_domain_config
-   - cfg = load_domain_config("domains/<your_realm>/configs/domain.yaml")
+Then edit:
+- `domains/<your_realm>/configs/domain.yaml`
+- `domains/<your_realm>/mappings/schema.md`
+- `domains/<your_realm>/pipelines/README.md`
+- `domains/<your_realm>/concepts/seed_concepts.yaml`
 
-Minimal startup boilerplate for any realm
-- Define observed variables (o_t)
-- Define latent variables (z_t)
-- Define action variables (a_t)
-- Define outcomes (y_t)
-- Define plausibility constraints/factors (E_i)
-- Train: encoder -> JEPA -> transition -> energy -> outcome heads
-- Simulate: campaign -> scenario -> timeline/run sampling
+Load merged config in Python:
 
-Safety note
+```python
+from wm_app.core.config_loader import load_domain_config
+
+cfg = load_domain_config("domains/<your_realm>/configs/domain.yaml")
+```
+
+## Minimal realm modeling checklist
+
+- define observed variables (`o_t`)
+- define latent state (`z_t`) or proxies
+- define actions (`a_t`)
+- define outcomes (`y_t`)
+- define plausibility factors/constraints (`E_i`)
+- train: encoder -> JEPA -> transition -> energy -> outcomes
+- simulate: campaign -> scenario -> timeline/run sampling
+
+## Safety
+
 Clinical realms are for retrospective research and medical education simulation only.
 Do not present outputs as treatment recommendations.
