@@ -1,0 +1,23 @@
+domain: clinical_hf
+inherits: ../../../configs/backbone/base.yaml
+
+data:
+  provider: mimiciv
+  raw_root: data/mimiciv
+  processed_root: data/processed
+
+cohort:
+  include_rules:
+    - icd9_prefix: "428"
+    - icd10_prefix: "I50"
+  min_age: 18
+  min_los_hours: 24
+
+actions:
+  - iv_loop_diuretic_bucket
+  - oxygen_escalation
+  - vasopressor_start
+  - beta_blocker_toggle
+  - acei_arb_arni_exposure
+  - icu_transfer
+  - discharge_action

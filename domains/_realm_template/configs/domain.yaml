@@ -1,0 +1,20 @@
+domain: your_realm_name
+inherits: ../../../configs/backbone/base.yaml
+
+data:
+  provider: byoc
+  raw_root: data/your_realm_raw
+  processed_root: data/your_realm_processed
+
+entity:
+  primary_key: entity_id
+  time_key: timestamp
+
+actions:
+  - action_a
+  - action_b
+  - action_c
+
+outcomes:
+  - outcome_primary
+  - outcome_secondary

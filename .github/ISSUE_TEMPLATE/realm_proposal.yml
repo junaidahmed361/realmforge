@@ -1,0 +1,21 @@
+name: Realm proposal
+description: Propose a new domain Realm
+title: "[Realm]: "
+labels: ["realm"]
+body:
+  - type: input
+    id: realm_name
+    attributes:
+      label: Realm name
+    validations:
+      required: true
+  - type: textarea
+    id: world
+    attributes:
+      label: World definition (entities/rules/dynamics)
+    validations:
+      required: true
+  - type: textarea
+    id: campaign
+    attributes:
+      label: Campaign(s) and scenario examples

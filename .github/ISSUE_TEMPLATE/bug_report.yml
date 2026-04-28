@@ -1,0 +1,26 @@
+name: Bug report
+description: Report a bug in RealmForge or a specific Realm
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - Backbone (wm_app)
+        - Realm overlay (domains/*)
+        - CI/CD
+        - Docs
+    validations:
+      required: true
+  - type: textarea
+    id: desc
+    attributes:
+      label: Description
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction steps

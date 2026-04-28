@@ -1,0 +1,20 @@
+domain: financial_template
+inherits: ../../../configs/backbone/base.yaml
+
+data:
+  provider: byoc
+  raw_root: data/finance
+  processed_root: data/processed_finance
+
+entity:
+  primary_key: instrument_id
+  time_key: timestamp
+
+actions:
+  - position_increase
+  - position_decrease
+  - hedge_open
+  - hedge_close
+  - rebalance
+  - halt
+  - exit

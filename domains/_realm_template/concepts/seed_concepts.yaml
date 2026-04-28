@@ -1,0 +1,6 @@
+# Seed concepts for retrieval bootstrapping
+concepts:
+  - name: concept_a
+    weak_labels: []
+  - name: concept_b
+    weak_labels: []
