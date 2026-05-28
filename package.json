@@ -1,0 +1,11 @@
+{
+  "name": "worldforge-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter @worldforge/api dev",
+    "typecheck": "pnpm -r typecheck"
+  }
+}

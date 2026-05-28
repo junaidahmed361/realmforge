@@ -1,128 +1,190 @@
-# RealmForge
+# Worldforge
 
-![CI Passing](https://img.shields.io/badge/CI-passing-brightgreen)
-![Security Scan Passing](https://img.shields.io/badge/Security%20Scan-passing-brightgreen)
-![Bandit](https://img.shields.io/badge/Bandit-clean-brightgreen)
-![License MIT](https://img.shields.io/badge/License-MIT-blue)
+**Control the future of your system, not just its code.**
 
-Build worlds, not one-off pipelines.
+---
 
-<p align="center">
-  <img src="assets/realmforge-cartoon.svg" alt="RealmForge cartoon concept graphic" width="620" />
-</p>
+## Why Worldforge Exists
 
-RealmForge is for teams who want to simulate decisions over time without rewriting infrastructure every time they switch realms. You bring the domain logic; RealmForge gives you a reusable backbone for state, actions, plausibility constraints, and rollouts.
+Modern software development is fragmented across tools:
 
-In plain English:
-- If you can describe your domain as "things changing over time"
-- And you want to run "what if we do X instead of Y?"
-- RealmForge helps you turn that into repeatable simulations.
+- GitHub tracks code
+- Datadog tracks metrics
+- Amplitude tracks users
+- Jira tracks tasks
+- Notion tracks decisions
 
-## Why build on RealmForge?
+None of these systems answer a fundamental question:
 
-Most simulation projects start fast and then get messy:
-- domain code gets tightly coupled to model code
-- experiments become hard to reproduce
-- every new use-case needs custom plumbing
+> *What will happen if we change something?*
 
-RealmForge keeps those concerns separated:
-- a shared backbone in `app/wm_app/`
-- domain overlays in `realms/`
-- repeatable configs and quality gates for CI/CD
+Developers operate reactively:
 
-So your clinical, finance, logistics, or policy teams can all use the same engine with different "Realms."
+- write code
+- run tests
+- fix failures
+- deploy
+- observe impact
 
-## Naming and concepts
+This loop is inefficient, local, and blind to broader consequences.
 
-- RealmForge = the framework/repo
-- Realm = a domain-specific scaffold (example: HealthRealm, FinanceRealm)
-- World = the environment, entities, rules, and dynamics
-- Campaign = a goal-driven journey/problem in that world
-- Scenario = a concrete setup or counterfactual in a campaign
-- Timeline / Run = one sampled rollout of what could happen
+---
 
-## Project structure
+## The Problem
 
-- `app/wm_app/` shared backbone (encoding, transition, energy, rollout interfaces)
-- `realms/` realm overlays (schemas, mappings, concepts, actions)
-- `configs/backbone/` default backbone configuration
-- `.github/` CI/CD workflows, templates, and governance
+Even with LLM agents:
 
-## Quick start (simple)
+- agents operate locally on code
+- they lack awareness of business goals
+- they cannot simulate long-term impact
+- they do not align across systems
+
+World models exist, but are:
+
+- primitive
+- single-domain
+- disconnected from real software systems
+
+There is no system that connects:
+
+```text
+code → runtime → users → business outcomes
+```
+
+---
+
+## The Worldforge Approach
+
+Worldforge builds a **multi-world model** of your system:
+
+- Code World
+- Runtime World
+- Business World
+- User World
+- Test World
+- Knowledge World
+
+It forges them into a single belief graph.
+
+Instead of editing code directly, you:
+
+1. State an intent
+2. See impacted parts of the system
+3. Compare possible futures
+4. Adjust tradeoffs
+5. Approve a trajectory
+
+Worldforge then generates the implementation.
+
+---
+
+## What Makes It Different
+
+Worldforge does not optimize for writing code faster.
+
+It optimizes for:
+
+- choosing the right changes
+- understanding system-wide impact
+- reducing unintended consequences
+- aligning engineering with business goals
+
+GitHub tells you what changed.
+
+Worldforge tells you what will happen.
+
+---
+
+## Core Concepts
+
+- **Intent**: What you want to achieve
+- **Impact Surface**: What parts of the system are affected
+- **Trajectory**: A candidate path to the goal
+- **Simulation**: Predicted outcome across code, runtime, and business
+- **Calibration**: User-defined tradeoffs
+- **Work Unit**: A semantic change ready for execution
+- **Evidence**: Code, metrics, and docs supporting each claim
+
+---
+
+## Current State
+
+Worldforge is an early-stage system.
+
+The MVP focuses on:
+
+- code ingestion
+- impact surface generation
+- trajectory planning
+- evidence-backed work units
+
+Future versions will integrate:
+
+- runtime telemetry
+- business metrics
+- causal inference
+- multi-world simulation
+
+---
+
+## Philosophy
+
+Software development should not be about navigating diffs.
+
+It should be about:
+
+- defining outcomes
+- exploring possibilities
+- understanding tradeoffs
+- selecting futures
+
+Worldforge exists to make that possible.
+
+---
+
+## Getting Started (Planned)
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -e .[dev]
+pnpm install
+pnpm dev
 ```
 
-```bash
-realm --build
-realm --start
-```
+Then:
 
-## Quick start (developer workflow)
+1. Connect a GitHub repo
+2. Enter an intent
+3. Explore impact
+4. Approve a trajectory
+5. Generate a PR
 
-```bash
-pre-commit install
-pre-commit run --all-files
-make ci
-pytest -q
-```
+---
 
-## Examples
+## Open-source backend: Bring Your Own CodeWorld (BYOC)
 
-Start with the data-free hello world:
+Enterprise teams can run Worldforge with their own source-control system and data boundary.
 
-```bash
-uv run python examples/hello-world/run.py
-```
+Current open backend adapters include:
 
-Or run a trivial real-world domain example (inventory planning):
+- GitHub
+- GitLab
+- Bitbucket
+- Gitea
+- Local filesystem repo mirror
 
-```bash
-uv run python examples/supply-chain-mini/run.py
-```
+See `docs/open-source-backend-byocodeworld.md` and `apps/api/src/providers/` for extension points.
 
-See:
-- `examples/hello-world/README.md`
-- `examples/supply-chain-mini/README.md`
+---
 
-## Create a new Realm (boilerplate)
+## Vision
 
-```bash
-cp -R realms/_realm_template realms/<your_realm>
-```
+Worldforge is a step toward simulation-native software development.
 
-Then edit:
-- `realms/<your_realm>/configs/domain.yaml`
-- `realms/<your_realm>/mappings/schema.md`
-- `realms/<your_realm>/pipelines/README.md`
-- `realms/<your_realm>/concepts/seed_concepts.yaml`
+A world where:
 
-Load merged config in Python:
+- agents reason before acting
+- systems are understood holistically
+- changes are chosen, not guessed
 
-```python
-from app.wm_app.core.config_loader import load_domain_config
+---
 
-cfg = load_domain_config("realms/<your_realm>/configs/domain.yaml")
-```
-
-## Minimal realm modeling checklist
-
-- define observed variables (`o_t`)
-- define latent state (`z_t`) or proxies
-- define actions (`a_t`)
-- define outcomes (`y_t`)
-- define plausibility factors/constraints (`E_i`)
-- train: encoder -> JEPA -> transition -> energy -> outcomes
-- simulate: campaign -> scenario -> timeline/run sampling
-
-## Safety
-
-Clinical realms are for retrospective research and medical education simulation only.
-Do not present outputs as treatment recommendations.
-
-## License
-
-MIT — see `LICENSE`.
+**Build the future before you commit to it.**
