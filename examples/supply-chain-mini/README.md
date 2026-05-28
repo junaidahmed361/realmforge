@@ -1,21 +1,9 @@
-# Supply Chain Mini Realm (Trivial Real-World Example)
+# Legacy example: Supply Chain Mini Realm
 
-This example shows a simple, realistic planning setup: a small warehouse deciding daily replenishment actions under demand uncertainty.
+Note: this example is from earlier RealmForge Python prototypes and is not part of the current Worldforge MVP backend path.
 
-Why this is real-world applicable:
-- maps directly to inventory planning and stockout prevention
-- uses candidate action sequences (order none/small/medium)
-- ranks scenarios by utility to compare policy choices
+For practical Worldforge usage, follow:
+- root `README.md` for end-to-end demo
+- `docs/open-source-backend-byocodeworld.md` for BYOC backend details
 
-It is still intentionally lightweight and synthetic (no external data dependency).
-
-## Run
-
-```bash
-uv run python examples/supply-chain-mini/run.py
-```
-
-## What it prints
-- candidate policy names
-- utility score per policy (higher is better)
-- best policy under this sampled demand context
+This directory remains as legacy reference only.

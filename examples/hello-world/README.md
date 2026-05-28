@@ -1,26 +1,10 @@
-# RealmForge Hello World
+# Legacy example: RealmForge Hello World
 
-This is a minimal, synthetic example that runs a tiny counterfactual rollout without any domain dataset.
+Note: this example belongs to earlier RealmForge Python experimentation and is not part of the current Worldforge MVP backend flow.
 
-What it demonstrates:
-- creating an initial latent state (`z0`)
-- generating candidate action trajectories
-- simulating futures with RealmForge transition + energy + outcome modules
-- ranking scenarios by utility logit
+If you are validating Worldforge today, use:
+- root `README.md` quickstart
+- `apps/api` endpoints
+- visualization repo consuming exported WorkUnit JSON
 
-## Run
-
-From repo root:
-
-```bash
-uv run python examples/hello-world/run.py
-```
-
-## Expected output
-
-You should see:
-- latent trajectory tensor shape
-- utility logits shape
-- top 3 scenario indices by utility
-
-This example is intentionally data-free and safe for first-time users.
+This folder is kept only as historical reference.
