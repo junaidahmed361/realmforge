@@ -53,9 +53,48 @@ function filePriorityScore(file: string, parsed: ReturnType<typeof parseBusiness
   if (/readme|docs|tutorial|example|quickstart|beginner/i.test(file)) score += 3;
   if (/train|trainer|optim|checkpoint|distributed|fsdp|ddp/i.test(file)) score += 3;
   if (/inference|latency|benchmark|profil|serve|api|model/i.test(file)) score += 2;
-  if (/tensorflow|tf/i.test(file)) score += parsed.isTfToTorch ? 5 : 1;
+  if (/tensorflow|tf\b/i.test(file)) score += parsed.isTfToTorch ? 5 : 1;
   if (/pytorch|torch/i.test(file)) score += parsed.isTfToTorch ? 4 : 1;
   return score;
+}
+
+function classifyWorld(file: string): 'code' | 'runtime' | 'user' | 'business' {
+  if (/readme|docs|tutorial|example|quickstart|beginner/i.test(file)) return 'user';
+  if (/train|trainer|optim|checkpoint|distributed|fsdp|ddp|latency|benchmark|profil|serve|runtime/i.test(file)) return 'runtime';
+  if (/kpi|conversion|onboard|growth|retention|business/i.test(file)) return 'business';
+  return 'code';
+}
+
+function mapTrajectoriesForFile(file: string): string[] {
+  const f = file.toLowerCase();
+  const ids = new Set<string>();
+  if (/(docs|tutorial|example|quickstart|readme|onboard|beginner)/.test(f)) ids.add('traj_onboarding_first');
+  if (/(train|inference|latency|benchmark|distributed|fsdp|ddp|perf|stability|reliab)/.test(f)) ids.add('traj_perf_reliability_first');
+  if (!ids.size) ids.add('traj_perf_reliability_first');
+  return [...ids];
+}
+
+function plannedActionsFor(world: 'code' | 'runtime' | 'user' | 'business'): string[] {
+  if (world === 'code') return [
+    'Refactor this module behind a feature flag and keep old path as fallback.',
+    'Add contract/regression tests before cutover.',
+    'Ship adapter layer for TensorFlow->PyTorch compatibility.'
+  ];
+  if (world === 'runtime') return [
+    'Canary rollout with p95/p99 and failure-rate guardrails.',
+    'Benchmark before/after and set automatic rollback thresholds.',
+    'Tune worker concurrency and caching for hot paths.'
+  ];
+  if (world === 'user') return [
+    'Instrument first-success journey and onboarding drop-off.',
+    'Add migration walkthrough updates and example-based guidance.',
+    'A/B test onboarding copy and sequence for activation lift.'
+  ];
+  return [
+    'Tie rollout to KPI checkpoints and weekly decision gates.',
+    'Publish expected impact ranges and stop/go criteria.',
+    'Align roadmap sequencing to measured conversion effects.'
+  ];
 }
 
 app.get('/health', (_req, res) => {
@@ -93,22 +132,27 @@ app.post('/intent', async (req, res) => {
     .slice(0, 8)
     .map((x) => x.f);
 
-  const entities = impactFiles.map((f, idx) => ({
-    id: `ent_${idx + 1}`,
-    world: 'code',
-    type: /readme|docs|tutorial|example/i.test(f) ? 'doc_or_example' : 'file',
-    name: f,
-    confidence: 0.7,
-    evidenceRefs: [
-      {
-        id: `ev_${idx + 1}`,
-        sourceType: 'code',
-        uri: provider.buildEvidenceRef(repo, f, 1, 250),
-        label: f,
-        confidence: 0.78
-      }
-    ]
-  }));
+  const entities = impactFiles.map((f, idx) => {
+    const world = classifyWorld(f);
+    return {
+      id: `ent_${idx + 1}`,
+      world,
+      type: /readme|docs|tutorial|example/i.test(f) ? 'doc_or_example' : 'file',
+      name: f,
+      confidence: 0.7,
+      trajectoryIds: mapTrajectoriesForFile(f),
+      plannedActions: plannedActionsFor(world),
+      evidenceRefs: [
+        {
+          id: `ev_${idx + 1}`,
+          sourceType: 'code',
+          uri: provider.buildEvidenceRef(repo, f, 1, 250),
+          label: f,
+          confidence: 0.78
+        }
+      ]
+    };
+  });
 
   const workUnit = {
     id: `wu_${Date.now()}`,
